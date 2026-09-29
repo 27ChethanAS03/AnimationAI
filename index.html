@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation AI</title>
+    <style>
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: #080808;
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        
+    }
+
+   .container {
+    width: min(900px, 90%);
+    margin-top: 120px;
+}
+
+    h1 {
+    font-size: 64px;
+    margin-bottom: 15px;
+    letter-spacing: -2px;
+}
+
+    p {
+        color: #aaaaaa;
+        font-size: 18px;
+        margin-bottom: 35px;
+    }
+
+   textarea {
+    width: 100%;
+    min-height: 180px;
+    box-sizing: border-box;
+    padding: 22px;
+    background: #111111;
+    color: white;
+    border: 1px solid #2d2d2d;
+    border-radius: 16px;
+    font-size: 17px;
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
+}
+
+textarea:focus {
+    border-color: #666;
+}
+
+    button {
+    margin-top: 20px;
+    padding: 16px 34px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    opacity: 0.85;
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+    nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8, 8, 8, 0.9);
+    border-bottom: 1px solid #222;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.badge {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 8px 14px;
+    border: 1px solid #333;
+    border-radius: 20px;
+    color: #aaa;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.creation-type {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.type-btn {
+    margin-top: 0;
+    padding: 10px 18px;
+    background: #151515;
+    color: #aaa;
+    border: 1px solid #2d2d2d;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.type-btn.active {
+    background: #ffffff;
+    color: #000000;
+}
+
+.type-btn:hover {
+    opacity: 0.85;
+    transform: none;
+}
+
+.style-selection {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.style-selection label {
+    display: block;
+    margin-bottom: 8px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.style-selection select {
+    width: 100%;
+    padding: 14px 16px;
+    background: #151515;
+    color: white;
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    cursor: pointer;
+}
+
+.style-selection select:focus {
+    border-color: #666;
+}
+
+.language-selection {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.language-selection label {
+    display: block;
+    margin-bottom: 8px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.language-selection select {
+    width: 100%;
+    padding: 14px 16px;
+    background: #151515;
+    color: white;
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    cursor: pointer;
+}
+
+.language-selection select:focus {
+    border-color: #666;
+}
+
+.duration-selection {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.duration-selection label {
+    display: block;
+    margin-bottom: 8px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.duration-selection select {
+    width: 100%;
+    padding: 14px 16px;
+    background: #151515;
+    color: white;
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    cursor: pointer;
+}
+
+.duration-selection select:focus {
+    border-color: #666;
+}
+
+h2 {
+    margin-top: 35px;
+    margin-bottom: 15px;
+    text-align: left;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.consistency-option {
+    text-align: left;
+    margin-bottom: 25px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.consistency-option label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.consistency-option input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.advanced-options {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.advanced-toggle {
+    margin-top: 0;
+    padding: 10px 0;
+    background: transparent;
+    color: #888;
+    border: none;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.advanced-toggle:hover {
+    color: white;
+    opacity: 1;
+    transform: none;
+}
+
+.advanced-panel {
+    display: none;
+    padding: 20px;
+    margin-top: 10px;
+    background: #111111;
+    border: 1px solid #2d2d2d;
+    border-radius: 14px;
+}
+
+.advanced-panel label {
+    display: block;
+    margin: 15px 0 8px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.advanced-panel label:first-child {
+    margin-top: 0;
+}
+
+.advanced-panel select {
+    width: 100%;
+    padding: 13px 15px;
+    background: #181818;
+    color: white;
+    border: 1px solid #2d2d2d;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+}
+
+.project-name {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.project-name label {
+    display: block;
+    margin-bottom: 8px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.project-name input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    background: #151515;
+    color: white;
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+.project-name input:focus {
+    border-color: #666;
+}
+
+.generation-status {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    background: #111111;
+    border: 1px solid #2d2d2d;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.generation-status p {
+    margin: 10px 0 0;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.loader {
+    width: 28px;
+    height: 28px;
+    margin: 0 auto;
+    border: 3px solid #333;
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 50px;
+    text-align: left;
+}
+
+.feature-card {
+    padding: 22px;
+    background: #111111;
+    border: 1px solid #2d2d2d;
+    border-radius: 16px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    border-color: #555;
+}
+
+.feature-icon {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.feature-card h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+}
+
+.feature-card p {
+    margin: 0;
+    color: #888;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+@media (max-width: 850px) {
+    .container {
+        width: 90%;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        padding: 18px 20px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    h1 {
+        font-size: 48px;
+    }
+}
+
+footer {
+    margin-top: 70px;
+    padding: 25px 0;
+    border-top: 1px solid #222;
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+}
+
+.ai-note {
+    margin-top: 12px;
+    margin-bottom: 30px;
+    color: #666;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+}
+
+.prompt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.prompt-header span:first-child {
+    color: #ddd;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.prompt-hint {
+    color: #666;
+    font-size: 12px;
+}
+
+.character-input {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.character-input label {
+    display: block;
+    margin-bottom: 8px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.character-input label span {
+    color: #555;
+    font-size: 12px;
+}
+
+.character-input input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    background: #151515;
+    color: white;
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+.character-input input:focus {
+    border-color: #666;
+}
+
+.audio-option {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.audio-option label {
+    display: block;
+    margin-bottom: 8px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.audio-option select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    background: #151515;
+    color: white;
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    cursor: pointer;
+}
+
+.audio-option select:focus {
+    border-color: #666;
+}
+
+.recent-projects {
+    margin-top: 70px;
+    text-align: left;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.section-heading h2 {
+    margin: 0;
+}
+
+.section-heading span {
+    color: #666;
+    font-size: 12px;
+}
+
+.empty-projects {
+    padding: 45px 20px;
+    text-align: center;
+    background: #111111;
+    border: 1px dashed #2d2d2d;
+    border-radius: 16px;
+}
+
+.empty-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.empty-projects h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+}
+
+.empty-projects p {
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+}
+
+.create-divider {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 65px;
+    margin-bottom: 10px;
+}
+
+.create-divider::before,
+.create-divider::after {
+    content: "";
+    height: 1px;
+    background: #222;
+    flex: 1;
+}
+
+.create-divider span {
+    color: #555;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.field-label {
+    margin-bottom: 8px;
+    color: #aaa;
+    font-size: 14px;
+    text-align: left;
+}
+
+.prompt-tip {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.surprise-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+#surprise-button {
+    margin-top: 0;
+    padding: 8px 14px;
+    background: transparent;
+    color: #888;
+    border: 1px solid #2d2d2d;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+#surprise-button:hover {
+    color: white;
+    border-color: #555;
+    opacity: 1;
+    transform: none;
+}
+
+.prompt-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+#clear-button {
+    margin-top: 0;
+    padding: 8px 14px;
+    background: transparent;
+    color: #666;
+    border: 1px solid #2d2d2d;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+#clear-button:hover {
+    color: white;
+    border-color: #555;
+    opacity: 1;
+    transform: none;
+}
+
+#ai-result {
+    margin-top: 50px;
+    padding: 30px;
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-radius: 18px;
+    text-align: left;
+}
+
+#ai-result h2 {
+    margin-top: 0;
+    font-size: 28px;
+}
+
+.result-story,
+.result-scenes {
+    margin-top: 25px;
+    padding: 20px;
+    background: #181818;
+    border-radius: 14px;
+}
+
+.result-story h3,
+.result-scenes h3 {
+    margin-top: 0;
+}
+
+#result-story {
+    line-height: 1.7;
+    color: #ccc;
+}
+
+#result-scenes {
+    line-height: 1.7;
+    color: #ddd;
+}
+
+#result-scenes p {
+    margin: 0 0 16px 0;
+    padding: 16px 18px;
+    background: #202020;
+    border-radius: 10px;
+    border-left: 3px solid #ffffff;
+}
+
+#result-scenes p:last-child {
+    margin-bottom: 0;
+}
+
+.character-image-result {
+    margin-top: 24px;
+    padding: 24px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 16px;
+}
+
+.character-image-result h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#character-image-placeholder {
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #1b1b1b;
+    border-radius: 12px;
+    border: 1px dashed #555;
+}
+
+.image-placeholder-icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.scene-builder {
+    margin-top: 50px;
+    padding: 30px;
+    background: #101010;
+    border: 1px solid #333;
+    border-radius: 16px;
+}
+
+.scene-builder .section-heading {
+    margin-bottom: 25px;
+}
+
+.scene-builder-empty {
+    padding: 30px;
+    background: #181818;
+    border: 1px dashed #555;
+    border-radius: 12px;
+    color: #aaa;
+    text-align: center;
+}
+
+.scene-card {
+    margin-bottom: 20px;
+    padding: 22px;
+    background: #181818;
+    border: 1px solid #333;
+    border-radius: 12px;
+}
+
+.scene-card h3 {
+    margin-top: 0;
+}
+
+.scene-card p {
+    color: #ccc;
+    line-height: 1.6;
+}
+
+/* SHOT BUILDER */
+
+.shot-builder {
+    margin-top: 50px;
+    padding: 30px;
+    background: #101010;
+    border: 1px solid #333;
+    border-radius: 16px;
+}
+
+.shot-builder .section-heading {
+    margin-bottom: 25px;
+}
+
+.shot-builder-empty {
+    padding: 30px;
+    background: #181818;
+    border: 1px dashed #555;
+    border-radius: 12px;
+    color: #aaa;
+    text-align: center;
+}
+
+.shot-card {
+    margin-bottom: 20px;
+    padding: 22px;
+    background: #181818;
+    border: 1px solid #333;
+    border-radius: 12px;
+}
+
+.shot-card h3 {
+    margin-top: 0;
+}
+
+.shot-card p {
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.generate-video-button {
+    margin-top: 15px;
+    padding: 12px 18px;
+    background: #2a2a2a;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.generate-video-button:hover {
+    background: #383838;
+}
+
+.generated-video-result {
+    margin-top: 20px;
+    padding: 20px;
+    background: #151515;
+    border: 1px solid #444;
+    border-radius: 14px;
+}
+
+.generated-video-result h4 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.video-placeholder {
+    margin-top: 15px;
+    padding: 25px;
+    background: #202020;
+    border: 1px dashed #555;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.video-icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.video-placeholder p {
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.video-placeholder strong {
+    color: white;
+}
+
+.video-placeholder small {
+    color: #888;
+}
+
+.demo-video-player {
+    margin-top: 20px;
+    background: #0b0b0b;
+    border: 1px solid #333;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.demo-video-screen {
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #111;
+    text-align: center;
+}
+
+.play-button {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #2a2a2a;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.demo-video-screen p {
+    margin: 5px 0;
+    color: white;
+    font-weight: bold;
+}
+
+.demo-video-screen small {
+    color: #888;
+}
+
+.video-controls {
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #aaa;
+    font-size: 13px;
+    background: #151515;
+}
+
+.character-card {
+    margin-top: 18px;
+    padding: 20px;
+    background: #202020;
+    border: 1px solid #333;
+    border-radius: 14px;
+}
+
+.character-card h4 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 22px;
+}
+
+.character-card p {
+    margin: 10px 0;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.character-card strong {
+    color: white;
+}
+
+.generate-character-image-button {
+    margin-top: 18px;
+    padding: 12px 18px;
+    background: #2a2a2a;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.generate-character-image-button:hover {
+    background: #383838;
+}
+
+</style>
+</head>
+
+<body>
+
+    <nav>
+    <div class="logo">🎬 Animation AI</div>
+    <div class="nav-links">
+        <span>Home</span>
+        <span>My Projects</span>
+    </div>
+</nav>
+
+    <div class="container">
+
+    <div class="badge">✦ AI-POWERED ANIMATION</div>
+
+   <h1>Bring Your Imagination to Life</h1>
+
+    <p><p>Create animated movies and series from a simple idea.</p>
+
+    <div class="ai-note">
+    Powered by intelligent story, character and scene generation
+</div>
+
+<div class="field-label">Project Type</div>
+
+    <div class="creation-type">
+    <button class="type-btn active">🎬 Movie</button>
+    <button class="type-btn">📺 Series</button>
+</div>
+
+<div class="style-selection">
+    <label for="animation-style">Animation Style</label>
+
+    <select id="animation-style">
+        <option value="anime">Anime</option>
+        <option value="3d">3D Animation</option>
+        <option value="cartoon">Cartoon</option>
+        <option value="cinematic">Cinematic</option>
+        <option value="fantasy">Fantasy</option>
+    </select>
+
+    <div class="language-selection">
+    <label for="output-language">Output Language</label>
+
+    <select id="output-language">
+        <option value="auto">🌐 Auto Detect</option>
+        <option value="english">🇬🇧 English</option>
+        <option value="kannada">🇮🇳 ಕನ್ನಡ (Kannada)</option>
+        <option value="hindi">🇮🇳 हिन्दी (Hindi)</option>
+        <option value="telugu">🇮🇳 తెలుగు (Telugu)</option>
+        <option value="tamil">🇮🇳 தமிழ் (Tamil)</option>
+        <option value="malayalam">🇮🇳 മലയാളം (Malayalam)</option>
+        <option value="marathi">🇮🇳 मराठी (Marathi)</option>
+        <option value="bengali">🇮🇳 বাংলা (Bengali)</option>
+        <option value="urdu">🇮🇳 اردو (Urdu)</option>
+    </select>
+</div>
+
+</div>
+
+<div class="duration-selection">
+    <label for="duration">Duration</label>
+
+    <select id="duration">
+        <option value="short">Short — 30 seconds</option>
+        <option value="medium">Medium — 1 minute</option>
+        <option value="long">Long — 5 minutes</option>
+        <option value="episode">Episode — 10 minutes</option>
+    </select>
+</div>
+
+<div class="consistency-option">
+    <label>
+        <input type="checkbox" id="character-consistency" checked>
+        Keep characters consistent
+    </label>
+</div>
+
+<div class="project-name">
+    <label for="project-name">Project Name</label>
+    <input
+        type="text"
+        id="project-name"
+        placeholder="Enter your movie or series name..."
+    >
+</div>
+
+<div class="create-divider">
+    <span>CREATE</span>
+</div>
+
+<h2>What do you want to create?</h2>
+
+<div class="prompt-actions">
+
+    <button type="button" id="surprise-button">
+        🎲 Surprise Me
+    </button>
+
+    <button type="button" id="clear-button">
+        Clear
+    </button>
+
+</div>
+
+<div class="prompt-header">
+    <span>✨ Describe your vision</span>
+    <span class="prompt-hint">AI will turn it into a production plan</span>
+</div>
+
+    <textarea
+       placeholder="Describe your movie or series idea... For example: Create a sci-fi anime about a college student who discovers a mysterious AI."
+        rows="6"
+        cols="60">
+    </textarea>
+
+    <div class="prompt-tip">
+    💡 Tip: Include the genre, characters, setting, mood, and what should happen in your story.
+</div>
+
+    <div class="character-input">
+    <label for="character-description">Character Description <span>(Optional)</span></label>
+
+    <input
+        type="text"
+        id="character-description"
+        placeholder="Example: A 19-year-old engineering student with black hair..."
+    >
+</div>
+
+<button id="generate-character" type="button">
+    🎭 Generate Character
+</button>
+
+<div id="character-result" class="character-result" style="display: none;">
+    <h3>🎭 Character Profile</h3>
+    <div id="character-result-content"></div>
+</div>
+
+<div id="character-image-result" class="character-image-result" style="display: none;">
+    <h3>🖼️ Character Image</h3>
+    <div id="character-image-placeholder">
+        <div class="image-placeholder-icon">🎨</div>
+        <p>Character image will appear here.</p>
+    </div>
+</div>
+
+<div class="audio-option">
+    <label for="audio-mode">Audio</label>
+
+    <select id="audio-mode">
+        <option value="full">🎙️ Dialogue + Music + Sound Effects</option>
+        <option value="dialogue">🗣️ Dialogue Only</option>
+        <option value="music">🎵 Music + Sound Effects</option>
+        <option value="none">🔇 No Audio</option>
+    </select>
+</div>
+
+    <br><br>
+
+    <div class="advanced-options">
+
+    <button type="button" class="advanced-toggle">
+        ⚙ Advanced Options
+    </button>
+
+    <div class="advanced-panel">
+
+        <label for="aspect-ratio">Aspect Ratio</label>
+
+        <select id="aspect-ratio">
+            <option value="16:9">16:9 — Landscape</option>
+            <option value="9:16">9:16 — Portrait</option>
+            <option value="1:1">1:1 — Square</option>
+        </select>
+
+        <label for="quality">Quality</label>
+
+        <select id="quality">
+            <option value="standard">Standard</option>
+            <option value="high">High</option>
+            <option value="ultra">Ultra</option>
+        </select>
+
+    </div>
+
+</div>
+
+    <button id="generate-animation">
+    ✨ Generate Animation
+</button>
+
+    <div id="generation-status" class="generation-status">
+    <div class="loader"></div>
+    <p>Preparing your animation...</p>
+</div>
+
+<div class="features">
+
+    <div class="feature-card">
+        <div class="feature-icon">🎬</div>
+        <h3>Generate Movies</h3>
+        <p>Turn your ideas into complete animated stories.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🎭</div>
+        <h3>Create Characters</h3>
+        <p>Build unique characters for your animated world.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🎥</div>
+        <h3>Build Scenes</h3>
+        <p>Transform your screenplay into cinematic scenes.</p>
+    </div>
+
+</div>
+
+        </div>
+
+    <section id="ai-result" style="display: none;">
+    <h2 id="result-title"></h2>
+
+    <div class="result-story">
+        <h3>Story</h3>
+        <p id="result-story"></p>
+    </div>
+
+    <div class="result-scenes">
+        <h3>Scenes</h3>
+        <div id="result-scenes"></div>
+    </div>
+</section>
+
+<section class="scene-builder">
+    <div class="section-heading">
+        <h2>🎬 Scene Builder</h2>
+        <span>Turn your story into cinematic scenes</span>
+    </div>
+
+    <div id="scene-builder-list">
+        <div class="scene-builder-empty">
+            Generate a story first to build scenes.
+        </div>
+    </div>
+</section>
+
+<section class="shot-builder">
+
+    <div class="section-heading">
+        <h2>🎥 Shot Builder</h2>
+        <span>Break each scene into cinematic shots</span>
+    </div>
+
+    <div id="shot-builder-list">
+
+        <div class="shot-builder-empty">
+            Generate a scene first to create cinematic shots.
+        </div>
+
+    </div>
+
+</section>
+
+        <section class="recent-projects">
+
+    <div class="section-heading">
+        <h2>Recent Projects</h2>
+        <span>Your creations will appear here</span>
+    </div>
+
+<div id="recent-projects-list" class="empty-projects">
+            <div class="empty-icon">🎬</div>
+        <h3>No projects yet</h3>
+        <p>Create your first animation above.</p>
+    </div>
+
+</section>
+
+        <footer>
+    <p>© 2026 Animation AI. Create beyond imagination.</p>
+</footer>
+
+        <script>
+    const typeButtons = document.querySelectorAll(".type-btn");
+
+    typeButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            typeButtons.forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            button.classList.add("active");
+        });
+    });
+
+    const advancedToggle = document.querySelector(".advanced-toggle");
+
+advancedToggle.addEventListener("click", () => {
+    advancedToggle.textContent =
+        advancedToggle.textContent.includes("Advanced Options")
+            ? "⚙ Hide Advanced Options"
+            : "⚙ Advanced Options";
+});
+
+const advancedPanel = document.querySelector(".advanced-panel");
+
+advancedToggle.addEventListener("click", () => {
+    if (advancedPanel.style.display === "block") {
+        advancedPanel.style.display = "none";
+    } else {
+        advancedPanel.style.display = "block";
+    }
+});
+
+const generateButton = document.querySelector("#generate-animation");
+const generationStatus = document.querySelector("#generation-status");
+
+
+generateButton.addEventListener("click", async () => {
+
+
+    generationStatus.style.display = "block";
+generationStatus.querySelector("p").textContent =
+    "AI is creating your story...";
+
+    const projectName = document.querySelector("#project-name").value;
+    const selectedType = document.querySelector(".type-btn.active").textContent;
+    const animationStyle = document.querySelector("#animation-style").value;
+    const duration = document.querySelector("#duration").value;
+    const audioMode = document.querySelector("#audio-mode").value;
+    const outputLanguage =
+    document.querySelector("#output-language").value;
+    const characterConsistency =
+        document.querySelector("#character-consistency").checked;
+    const characterDescription =
+        document.querySelector("#character-description").value;
+    const prompt = promptBox.value;
+
+    console.log({
+        projectName,
+        selectedType,
+        animationStyle,
+        duration,
+        audioMode,
+        characterConsistency,
+        characterDescription,
+        prompt
+    });
+
+    const response = await fetch("http://localhost:3000/api/generate-story", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        projectName,
+        selectedType,
+        animationStyle,
+        duration,
+        outputLanguage,
+        audioMode,
+        characterConsistency,
+        characterDescription,
+        prompt
+    })
+});
+
+const result = await response.json();
+
+console.log("Backend response:", result);
+
+const aiResult = document.querySelector("#ai-result");
+const resultTitle = document.querySelector("#result-title");
+const resultStory = document.querySelector("#result-story");
+const resultScenes = document.querySelector("#result-scenes");
+
+aiResult.style.display = "block";
+
+if (result.success) {
+    resultTitle.textContent = result.title || "Your AI Story";
+    resultStory.textContent = result.story || result.result || "";
+
+    // CHARACTER BIBLE
+if (result.characters) {
+
+    const characterSection = document.createElement("div");
+
+    characterSection.className = "result-story";
+
+    characterSection.innerHTML = `
+        <h3>👥 Character Bible</h3>
+
+        ${result.characters.map(character => `
+            <div class="character-card">
+                <h4>${character.name}</h4>
+
+                <p><strong>Age:</strong> ${character.age || "Not specified"}</p>
+
+                <p><strong>Role:</strong> ${character.role || "Not specified"}</p>
+
+                <p><strong>Appearance:</strong> ${character.appearance || "Not specified"}</p>
+
+              <p><strong>Personality:</strong> ${character.personality || "Not specified"}</p>
+
+<button type="button" class="generate-character-image-button">
+    🎨 Generate Character Image
+</button>
+            </div>
+        `).join("")}
+    `;
+
+    aiResult.appendChild(characterSection);
+}
+
+    resultScenes.innerHTML = "";
+
+    if (result.scenes) {
+        result.scenes.forEach((scene, index) => {
+
+            const sceneBuilderList = document.querySelector("#scene-builder-list");
+
+            const sceneElement = document.createElement("p");
+
+            sceneElement.textContent =
+                `Scene ${index + 1}: ${scene}`;
+
+                const sceneCard = document.createElement("div");
+
+sceneCard.className = "scene-card";
+
+sceneCard.innerHTML = `
+    <h3>🎬 Scene ${index + 1}</h3>
+    <p>${scene}</p>
+    <button type="button" class="generate-scene-button">🎨 Generate Scene</button>
+`;
+
+sceneBuilderList.appendChild(sceneCard);
+
+            resultScenes.appendChild(sceneElement);
+        });
+    }
+
+// SAVE PROJECT
+const project = {
+    id: Date.now(),
+    name: projectName || result.title || "Untitled Animation",
+    title: result.title || "Untitled Animation",
+    story: result.story || result.result || "",
+    characters: result.characters || [],
+    scenes: result.scenes || [],
+    createdAt: new Date().toLocaleString()
+};
+
+const savedProjects =
+    JSON.parse(localStorage.getItem("animationProjects")) || [];
+
+savedProjects.unshift(project);
+
+localStorage.setItem(
+    "animationProjects",
+    JSON.stringify(savedProjects)
+);
+
+console.log("Project saved:", project);
+
+loadRecentProjects();
+
+} else {
+    resultTitle.textContent = "Generation Failed";
+    resultStory.textContent = result.message;
+}
+
+generationStatus.style.display = "none";
+
+});
+
+const surpriseButton = document.querySelector("#surprise-button");
+const promptBox = document.querySelector("textarea");
+
+const surpriseIdeas = [
+    "Create a sci-fi anime about a college student who discovers a mysterious AI inside an old phone.",
+    "Create a fantasy adventure about a young hero who discovers a hidden kingdom beneath his city.",
+    "Create a futuristic animated movie about a robot that wants to become human.",
+    "Create a mysterious animated series about students who discover a secret laboratory beneath their college.",
+    "Create an emotional animated movie about two childhood friends who meet again in a futuristic world."
+];
+
+surpriseButton.addEventListener("click", () => {
+    const randomIndex = Math.floor(Math.random() * surpriseIdeas.length);
+    promptBox.value = surpriseIdeas[randomIndex];
+});
+
+const clearButton = document.querySelector("#clear-button");
+
+clearButton.addEventListener("click", () => {
+    promptBox.value = "";
+});
+
+// LOAD RECENT PROJECTS
+function loadRecentProjects() {
+
+    const projectList =
+        document.querySelector("#recent-projects-list");
+
+    const savedProjects =
+        JSON.parse(localStorage.getItem("animationProjects")) || [];
+
+    if (savedProjects.length === 0) {
+        projectList.className = "empty-projects";
+
+        projectList.innerHTML = `
+            <div class="empty-icon">🎬</div>
+            <h3>No projects yet</h3>
+            <p>Create your first animation above.</p>
+        `;
+
+        return;
+    }
+
+    projectList.className = "projects-list";
+
+    projectList.innerHTML = savedProjects.map(project => `
+        <div class="project-card" data-project-id="${project.id}">
+
+            <h3>🎬 ${project.name}</h3>
+
+            <p>
+                ${project.story || "No story description available."}
+            </p>
+
+            <small>
+                Created: ${project.createdAt}
+            </small>
+
+        </div>
+    `).join("");
+}
+
+loadRecentProjects();
+
+// OPEN SAVED PROJECT
+document.addEventListener("click", (event) => {
+
+    const projectCard = event.target.closest(".project-card");
+
+    if (!projectCard) {
+        return;
+    }
+
+    const projectId = Number(projectCard.dataset.projectId);
+
+    const savedProjects =
+        JSON.parse(localStorage.getItem("animationProjects")) || [];
+
+    const project = savedProjects.find(
+        item => item.id === projectId
+    );
+
+    if (!project) {
+        return;
+    }
+
+    console.log("Opening project:", project);
+
+    alert(
+        `Project: ${project.name}\n\n` +
+        `Created: ${project.createdAt}\n\n` +
+        `Story:\n${project.story}`
+    );
+});
+
+const generateCharacterButton =
+    document.querySelector("#generate-character");
+
+const characterResult =
+    document.querySelector("#character-result");
+
+const characterResultContent =
+    document.querySelector("#character-result-content");
+
+generateCharacterButton.addEventListener("click", () => {
+
+    const description =
+        document.querySelector("#character-description").value;
+
+    if (!description.trim()) {
+        alert("Please enter a character description first.");
+        return;
+    }
+
+    characterResult.style.display = "block";
+
+    const characterImageResult =
+    document.querySelector("#character-image-result");
+
+characterImageResult.style.display = "block";
+
+    characterResultContent.innerHTML = `
+        <p><strong>Name:</strong> Main Character</p>
+        <p><strong>Description:</strong> ${description}</p>
+        <p><strong>Role:</strong> Protagonist</p>
+        <p><strong>Personality:</strong> Curious, intelligent, and determined.</p>
+        <p><strong>Appearance:</strong> Based on your character description.</p>
+    `;
+});
+
+document.addEventListener("click", (event) => {
+
+    if (event.target.classList.contains("generate-scene-button")) {
+
+        const button = event.target;
+        const sceneCard = button.closest(".scene-card");
+
+        button.textContent = "⏳ Generating Scene...";
+        button.disabled = true;
+
+        setTimeout(() => {
+
+            const result = document.createElement("div");
+
+            result.className = "generated-scene-result";
+
+           const sceneText = sceneCard.querySelector("p").textContent;
+
+result.innerHTML = `
+    <h4>🎬 Generated Scene</h4>
+    <p><strong>Scene:</strong> ${sceneText}</p>
+    <p><strong>Camera:</strong> ${
+    sceneText.includes("discovers")
+        ? "Wide establishing shot followed by a slow push-in toward the mysterious smartphone."
+        : sceneText.includes("activates")
+        ? "Extreme close-up of the smartphone screen followed by a dramatic orbit around Arjun."
+        : sceneText.includes("investigate")
+        ? "Handheld tracking shot following Arjun and Maya through the dark laboratory."
+        : sceneText.includes("experiment")
+        ? "Slow dramatic reveal of the hidden laboratory and the NEXA experiment."
+        : sceneText.includes("decide")
+        ? "Close-up of Arjun's face followed by a slow pull-back revealing the NEXA core."
+        : "Cinematic tracking shot."
+}</p>
+   <p><strong>Character Action:</strong> ${
+    sceneText.includes("discovers")
+        ? "Arjun carefully approaches the mysterious smartphone, kneels down, and reaches toward it with curiosity and caution."
+        : sceneText.includes("activates")
+        ? "The smartphone suddenly lights up. Arjun steps backward in shock as the NEXA interface appears on the screen."
+        : sceneText.includes("investigate")
+        ? "Arjun and Maya move carefully through the dark laboratory, examining old computers and searching for clues."
+        : sceneText.includes("experiment")
+        ? "Arjun and Maya uncover the hidden experiment and stare in shock as the laboratory systems begin powering on."
+        : sceneText.includes("decide")
+        ? "Arjun stands between the shutdown controls and the glowing NEXA core, struggling to make his final decision."
+        : "The characters move naturally through the environment."
+}</p>
+   <p><strong>Dialogue:</strong> ${
+    sceneText.includes("discovers")
+        ? '"What is this doing here?"'
+        : sceneText.includes("activates")
+        ? '"NEXA... you can predict the future?"'
+        : sceneText.includes("investigate")
+        ? '"Maya, look at this. Someone was still running this experiment."'
+        : sceneText.includes("experiment")
+        ? '"NEXA wasn\'t built to predict the future... it was built to change it."'
+        : sceneText.includes("decide")
+        ? '"If I destroy you, I may save the future... but if I trust you, everything could change."'
+        : '"Something strange is happening..."'
+}</p>
+   <p><strong>Music:</strong> ${
+    sceneText.includes("discovers")
+        ? "Low mysterious synth with a slowly rising tension."
+        : sceneText.includes("activates")
+        ? "Electronic pulse building into a dramatic reveal."
+        : sceneText.includes("investigate")
+        ? "Suspenseful orchestral music with deep electronic pulses."
+        : sceneText.includes("experiment")
+        ? "Dark cinematic orchestra with a powerful rising bass."
+        : sceneText.includes("decide")
+        ? "Emotional cinematic score building toward a powerful climax."
+        : "Mysterious cinematic background music."
+}</p>
+    <p><strong>Sound:</strong> ${
+    sceneText.includes("discovers")
+        ? "Footsteps, distant electrical hum, soft wind, dust movement, and abandoned laboratory ambience."
+        : sceneText.includes("activates")
+        ? "Digital startup tones, electrical sparks, phone vibration, and a sudden electronic pulse."
+        : sceneText.includes("investigate")
+        ? "Footsteps on metal floors, flickering lights, computer beeps, distant machinery, and echoing laboratory sounds."
+        : sceneText.includes("experiment")
+        ? "Machines powering on, warning alarms, electrical surges, deep mechanical vibrations, and system beeps."
+        : sceneText.includes("decide")
+        ? "Heartbeat, warning alarms, electrical energy, control-panel beeps, and a deep futuristic system hum."
+        : "Ambient environmental effects."
+}</p>
+    <p><strong>Shot Duration:</strong> 6 seconds</p>
+`;
+
+            sceneCard.appendChild(result);
+
+            // ADD SHOT TO SHOT BUILDER
+
+const shotBuilderList =
+    document.querySelector("#shot-builder-list");
+
+const emptyShotMessage =
+    shotBuilderList.querySelector(".shot-builder-empty");
+
+if (emptyShotMessage) {
+    emptyShotMessage.remove();
+}
+
+const shotCard =
+    document.createElement("div");
+
+shotCard.className = "shot-card";
+
+shotCard.innerHTML = `
+   <h3>🎥 ${sceneCard.querySelector("h3").textContent} — Shot Plan</h3>
+
+    <p>
+        <strong>Shot 1 — Establishing Shot</strong>
+    </p>
+
+    <p>
+        <strong>Camera:</strong>
+        Wide cinematic shot with a slow push-in.
+    </p>
+
+    <p>
+        <strong>Action:</strong>
+        ${sceneText}
+    </p>
+
+    <p>
+        <strong>Duration:</strong>
+        6 seconds
+    </p>
+
+    <p>
+        <strong>Visual Style:</strong>
+        Cinematic futuristic anime.
+    </p>
+
+    <button
+        type="button"
+        class="generate-video-button">
+        🎬 Generate Video Clip
+    </button>
+`;
+
+shotBuilderList.appendChild(shotCard);
+
+            button.textContent = "✅ Scene Generated";
+
+        }, 1500);
+    }
+
+});
+
+// CHARACTER IMAGE BUTTON
+document.addEventListener("click", async (event) => {
+
+    if (!event.target.classList.contains("generate-character-image-button")) {
+        return;
+    }
+
+    const button = event.target;
+    const characterCard = button.parentElement;
+
+    const characterName =
+        characterCard.querySelector("h4").textContent;
+
+    const characterDetails =
+        characterCard.innerText;
+
+    button.textContent = "⏳ Generating Character...";
+    button.disabled = true;
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:3000/api/generate-character-image",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    character: characterDetails
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        console.log("Character image response:", result);
+
+        if (result.success) {
+
+            button.textContent = "✅ Character Image Ready";
+
+            const placeholder = document.createElement("div");
+
+            placeholder.className =
+                "character-image-placeholder";
+
+placeholder.innerHTML = `
+    <div>🎨</div>
+
+    <p>
+        <strong>
+            ${characterName} — Character Image
+        </strong>
+    </p>
+
+    ${
+        result.image && result.image.url
+            ? `
+                <img
+                    src="${result.image.url}"
+                    alt="${characterName} Character Reference"
+                    style="
+                        width: 100%;
+                        max-width: 600px;
+                        display: block;
+                        margin: 20px auto;
+                        border-radius: 14px;
+                    "
+                >
+            `
+            : `
+                <p>
+                    Character reference system connected.
+                    The real generated image will appear here
+                    when image generation is enabled.
+                </p>
+            `
+    }
+
+    <small>
+        This character reference will be used
+        for future scenes and videos.
+    </small>
+`;
+
+            characterCard.appendChild(placeholder);
+
+        } else {
+
+            button.textContent = "❌ Generation Failed";
+            console.error(result.message);
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Character image request error:",
+            error
+        );
+
+        button.textContent = "❌ Connection Failed";
+
+    }
+
+});
+
+// GENERATE VIDEO CLIP BUTTON
+document.addEventListener("click", async (event) => {
+
+    if (!event.target.classList.contains("generate-video-button")) {
+        return;
+    }
+
+    const button = event.target;
+    const shotCard = button.closest(".shot-card");
+
+    button.textContent = "⏳ Preparing Video...";
+    button.disabled = true;
+
+    try {
+
+        const shotText = shotCard.innerText;
+
+        const response = await fetch(
+            "http://localhost:3000/api/generate-video",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    shot: shotText,
+                    character: "Arjun — 19 years old, black hair, blue hoodie, dark jeans, curious and determined.",
+                    style: "Cinematic futuristic anime",
+                    duration: "6 seconds"
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        console.log("Video backend response:", result);
+
+        if (!result.success) {
+            throw new Error(result.message || "Video generation failed");
+        }
+
+        const videoResult = document.createElement("div");
+
+        videoResult.className = "generated-video-result";
+
+        videoResult.innerHTML = `
+            <h4>🎬 Video Generation Ready</h4>
+
+            <div class="video-placeholder">
+
+                <div class="video-icon">🎥</div>
+
+                <p>
+                    <strong>Video Pipeline Connected</strong>
+                </p>
+
+                <p>
+                    Your shot has successfully reached the Animation AI backend.
+                </p>
+
+                <p>
+                    <strong>Duration:</strong> 6 seconds
+                </p>
+
+                <p>
+                    <strong>Style:</strong> Cinematic futuristic anime
+                </p>
+
+                <p>
+                    <strong>Character:</strong> Arjun
+                </p>
+
+                <p>
+                    <strong>Mode:</strong>
+                    ${result.demo ? "Demo Mode" : "Real AI Mode"}
+                </p>
+
+                <p>
+                    <strong>Status:</strong> Video generation pipeline connected ✅
+                </p>
+
+                ${
+                    result.videoPrompt
+                    ? `
+                        <details>
+                            <summary>🎬 Video Prompt</summary>
+                            <p>${result.videoPrompt}</p>
+                        </details>
+                    `
+                    : ""
+                }
+
+                <small>
+<div class="demo-video-player">
+
+    <div class="demo-video-screen">
+        <div class="play-button">▶</div>
+        <p>AI VIDEO PREVIEW</p>
+        <small>Demo Mode — Real MP4 will appear here later</small>
+    </div>
+
+    <div class="video-controls">
+        <span>00:00</span>
+        <span>━━━━━━</span>
+        <span>00:06</span>
+    </div>
+
+</div>
+                </small>
+
+            </div>
+        `;
+
+        shotCard.appendChild(videoResult);
+
+        button.textContent = "✅ Video Pipeline Connected";
+
+    } catch (error) {
+
+        console.error("Video generation error:", error);
+
+        button.textContent = "❌ Video Failed";
+        button.disabled = false;
+
+    }
+
+});
+
+</script>
+</body>
+</html>
